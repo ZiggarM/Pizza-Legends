@@ -26,9 +26,11 @@ class Overworld {
             src: "/images/characters/people/npc1.png"
         })
 
+        setTimeout(() => {
+            hero.sprite.draw(this.ctx);
+            npc1.sprite.draw(this.ctx);
 
-        hero.sprite.draw(this.ctx);
-        npc1.sprite.draw(this.ctx);
+        }, 200)
     }
 
 }
