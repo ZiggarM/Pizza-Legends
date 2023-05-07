@@ -23,6 +23,7 @@ class directionInput {
         document.addEventListener('keydown', (e) => {
             const dir = this.map[e.code];
             if (dir && this.heldDirection.indexOf(dir) === -1) {
+                //place it at the beggining of the array
                 this.heldDirection.unshift(dir);
                 console.log(this.heldDirection);
             }

@@ -1,4 +1,4 @@
-const ulitls = {
+const utils = {
     withGrid(n) {
         return n * 16
     }
