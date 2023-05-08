@@ -25,7 +25,6 @@ class directionInput {
             if (dir && this.heldDirection.indexOf(dir) === -1) {
                 //place it at the beggining of the array
                 this.heldDirection.unshift(dir);
-                console.log(this.heldDirection);
             }
         });
         document.addEventListener("keyup", (e) => {
@@ -33,7 +32,6 @@ class directionInput {
             const index = this.heldDirection.indexOf(dir)
             if (index > -1) {
                 this.heldDirection.splice(index, 1);
-                console.log(this.heldDirection);
             }
         })
     }
