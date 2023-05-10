@@ -10,7 +10,7 @@ class OverworldMap {
         this.upperImage.src = config.upperSrc
 
 
-        this.isCutScenePlaying = true;
+        this.isCutScenePlaying = false;
     }
 
     drawLowerImage(ctx, cameraPerson) {
@@ -57,7 +57,21 @@ class OverworldMap {
 
         this.isCutScenePlaying = false
 
+        // Reset npcs to do their idle behavior
+        Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
     }
+
+    checkForActionCutScene() {
+        const hero = this.gameObjects["hero"];
+        const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction);
+        const match = Object.values(this.gameObjects).find(object => {
+            return `${object.x}, ${object.y}` === `${nextCoords.x}, ${nextCoords.y}`
+        });
+        if (!this.isCutScenePlaying && match && match.talking.length) {
+            this.startCutScene(match.talking[0].events)
+        }
+    }
+
 
     addWall(x, y) {
         this.walls[`${x}, ${y}`] = true
@@ -94,6 +108,19 @@ window.OverworldMaps = {
                     { type: "stand", direction: "up", time: 800 },
                     { type: "stand", direction: "right", time: 1200 },
                     { type: "stand", direction: "up", time: 300 },
+                ],
+                talking: [
+                    {
+                        events: [
+                            { type: "textMessage", text: "Εδωσα στον τσουφι ενα ταλιρο για να μου παρει μαυρο" },
+                            { type: "textMessage", text: "Αλλα ακομα δεν εχει επιστρεψει, μηπως τον ειδες;" },
+                        ]
+                    },
+                    // {
+                    //     events: [
+                    //         { type: "textMessage", text: "Something else" }
+                    //     ]
+                    // },
                 ]
             }),
             npcB: new Person({
@@ -106,7 +133,14 @@ window.OverworldMaps = {
                     { type: "walk", direction: "up" },
                     { type: "walk", direction: "right" },
                     { type: "walk", direction: "down", },
-                ]
+                ],
+                talking: [
+                    {
+                        events: [
+                            { type: "textMessage", text: "Δεξιος Αριστερος Δεξιος Αριστερος" },
+                            { type: "textMessage", text: "Ημουν στην πλατεια και επινα ρετσινες αλλα τωρα γυριζω σπιτι" },
+                        ]
+                    }]
             }),
         },
         walls: {
