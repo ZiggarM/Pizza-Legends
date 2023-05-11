@@ -3,15 +3,47 @@ class Battle {
     this.combatants = {
       player1: new Combatant(
         {
-          ...Pizzas["s001"],
-          hp: 50,
+          ...Pizzas.s001,
+          team: "player",
+          hp: 30,
           maxHp: 50,
-          xp: 0,
+          xp: 75,
+          maxXp: 100,
           level: 1,
           status: null,
         },
         this
       ),
+      enemy1: new Combatant(
+        {
+          ...Pizzas.v001,
+          team: "enemy",
+          hp: 20,
+          maxHp: 50,
+          xp: 20,
+          maxXp: 100,
+          level: 1,
+          status: null,
+        },
+        this
+      ),
+      enemy2: new Combatant(
+        {
+          ...Pizzas.f001,
+          team: "enemy",
+          hp: 10,
+          maxHp: 50,
+          xp: 30,
+          maxXp: 100,
+          level: 1,
+          status: null,
+        },
+        this
+      ),
+    };
+    this.activeCombatant = {
+      player: "player1",
+      enemy: "enemy1",
     };
   }
 
@@ -31,5 +63,11 @@ class Battle {
   init(container) {
     this.createElement();
     container.appendChild(this.element);
+
+    Object.keys(this.combatants).forEach((key) => {
+      let combatant = this.combatants[key];
+      combatant.id = key;
+      combatant.init(this.element);
+    });
   }
 }
